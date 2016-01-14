@@ -1,0 +1,51 @@
+\section{What is REST?}
+REST is the software architecture style\cite{REST-wiki}. The communication is usually carried through HTTP protocol, but this is not a requirement. REST systems expose interfaces via URIs like\label{example-URI} \verb|/user| and then to interact with this resource one can use standard HTTP verbs (GET, POST, PUT and so on), but it does not need to implement all of them. Every new attempt to interact with resources is stateless, but there is a possibility of carrying additional information (i.e.\ for authorization) through HTTP headers.
+
+\section{Principles}
+
+\subsection{Uniform interface}
+\label{uniform-interface}
+In case of HTTP form of transporting data, every interaction can be made only through defined set of HTTP verbs as follows:
+
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{ll} \toprule
+ HTTP verb &  Meaning \\ \midrule
+ GET & Fetch resource \\
+ POST & Create new resource \\
+ PUT & Update resource by replacing \\
+ PATCH & Update resource partially \\
+ DELETE & Remove resource \\
+ OPTIONS & Get list of available HTTP verbs \\ \bottomrule
+\end{tabular}
+\caption{HTTP verbs}
+\label{tab:http-verbs}
+\end{table}
+
+Basically, in case of our example resource \verb|/user| GET, POST, PUT, PATCH, DELETE, OPTIONS would mean get user data, create new user, modify user by replacing all his data, update only few things (i.e.\ email and password), remove user, get available options (to see if I can remove user or not) respectively.
+
+\subsection{Stateless}
+\label{sec:stateless}
+It means no single request depends on the previous one. By that less complexity is achieved, but as a drawback it should carry authorization information with each request (i.e.\ in HTTP headers) causing more bandwidth usage.
+
+\subsection{Resources exposed via URIs}
+\label{sec:resources}
+URI\cite{URI-wiki} in short, it is a sequence of digits called string that represents specific resource. It is used commonly in WWW\@. A good example will be
+\begin{verbatim}
+http://google.com/a
+\end{verbatim}
+Breaking this up it begins with protocol name. In this case \verb|http|. Then it follows the domain name (\verb|google.com|). Those two are called URL and then after a last slash we have \verb|a| which is called URN\@. REST also tells that the URIs should be elegant, descriptive and not confusing so their meanings is straightforward.
+
+\section{Strengths}
+REST services are created from well known defined standards such as XML, JSON, URI, HTTP\@. They provide simple interfaces and they are simple to use in general. All web browsers are supporting aforementioned standards and most big websites chosen to implement RESTful services.
+
+By it stateless nature it proves to scale well for many clients and removes complexity which has a big impact on performance and reliability.
+
+When REST is using HTTP as a communication layer it can leverage the benefits of this protocol by using caching, clustering and load balancing which is a big win for architectures that needs to scale for millions of users.
+
+\section{Weakness}
+REST was defined in 2000\cite{REST-wiki} as a style and design architecture, but being heavily tightened to HTTP it inherited all its limitations like GET can only carry 4~KB of input data\cite[p.~3]{restful-web-services}.
+
+Another thing is performance when sending big amount of data and initializing connection every time we want to interact with resources. Unlike WebSockets, in REST we must send all the headers every time we communicate. In real time applications it is a big issue\footnote{That is the main reason behind creation of WebSockets}.
+
+Last weakness is lack of defined security and authentication methods in standard. Therefore developers have to use TLS/SSL to secure communication and create authentication system by themselves.
