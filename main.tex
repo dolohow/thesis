@@ -17,6 +17,13 @@
 \usepackage{listings}
 \usepackage{cprotect}
 \usepackage{refcount}
+\usepackage{hyperref}
+	\hypersetup{colorlinks,
+			citecolor=black,
+			filecolor=black,
+			linkcolor=black,
+			urlcolor=black
+	}
 
 \begin{document}
 
@@ -24,19 +31,20 @@
 \input{statement}
 
 \selectlanguage{english}
+\tableofcontents
+
 \input{abstract}
 
-\tableofcontents
-\listoffigures
-\listoftables
+\chapter{Goals and assumptions for the framework}
+\chaptermark{Goals}
+\input{chapters/introduction}
 
-\chapter{Introduction}
-\input{chapters/theory}
-
-\chapter{Overview}
+\chapter{Framework design}
+\chaptermark{Design}
 \input{chapters/overview}
 
-\chapter{Technical details}
+\chapter{Implementation and usage of framework}
+\chaptermark{Implementation}
 \input{chapters/details}
 
 \chapter{Conclusion}

@@ -1,11 +1,18 @@
-\section{Basics}
+\section{Directory structure}
 The framework is written in Go and it contains few custom Go packages\cite{Packages-go} that can be further extended, that is
 \begin{itemize}
-\item \textit{common} --- contains common utilities that are used across whole framework,
-\item \textit{config} --- contains package that is obliged to manage yaml based config files dependent on environmental variable,
-\item \textit{middleware} --- contains middlewares, small plugins that modify requests and responses.
+\item \verb|main| --- package that every go application needs to have in order to be executable, from this package binary file will be created\cite{Packages-go},
+\item \verb|common| --- contains common utilities that are used across whole framework,
+\item \verb|config| --- contains package that is obliged to manage yaml based config files dependent on environmental variable,
+\item \verb|middleware| --- contains middlewares, small plugins that modify requests and responses.
 \end{itemize}
-Every go application has a \verb|main| function which is a so called entry point and it is placed in \verb|main.go| file in the root of the project.
+
+In \verb|main| package few very important files were created
+\begin{itemize}
+\item \verb|main.go| --- every go application has a \verb|main| function which is a so called entry point,
+\item \verb|routes.go| --- contains routes definitions as described in (\ref{sec:path-of-the-request}),
+\item \verb|router.go| --- contains function for setting up routes defined in \verb|routes.go| file, default middlewares could be changed there
+\end{itemize}
 
 \section{Building}
 
@@ -48,6 +55,7 @@ In addition you can specify the port that the program will be listening on by \v
 \section{Principles of operation}
 
 \subsection{Path of the request}
+\label{sec:path-of-the-request}
 Server by default listens on port 5000. For every request the new Goroutine\cite{Goroutines-go} is being created. It is similar to thread, but basically it comes down to being a thread under the thread. Therefore every new request is handled separately and does not block the new requests. Such behaviour is provided by \textit{http}\cite{HTTP-go} package by default.
 
 How can the application differentiate between one request or another? We need to have some sort of routing mechanism. As stated in~\ref{sec:resources} every resource is identified by URI, therefore for every URI new handler needs to be created.
@@ -75,6 +83,7 @@ Route{
     user.RegisterHandler,
 }
 \end{verbatim}
+\renewcommand\figurename{Code}
 \caption{Example route}
 \label{src:example-route}
 \end{figure}
@@ -101,6 +110,7 @@ func SetJSONHeader(next http.Handler) http.Handler {
         return http.HandlerFunc(handler)
 }
 \end{verbatim}
+\renewcommand\figurename{Code}
 \caption{Example middleware that sets response headers}
 \label{src:example-middleware}
 \end{figure}
@@ -157,6 +167,7 @@ HMACSHA256(
   base64UrlEncode(payload),
   secret)
 \end{verbatim}
+\renewcommand\figurename{Code}
 \caption{Pseudocode that generates signature from header and payload}
 \label{src:signature}
 \end{figure}

@@ -1,0 +1,37 @@
+\section{Functionality and motivation to create}
+Communications between nodes. What does it really mean? What is node? And why should I care.
+
+First of all let me explain what a node really is. Think about it as a some sort of independent processing unit that can either act like a client (e.g.\ user browsing Internet) or server (either physical or virtual). Then imagine that those nodes wants to pass some messages one to another, but they are only connected through Internet and they might be far away from each other.
+
+There are many ways to solve this problem, but there are some aspects that one should really care about.
+
+Security, you do not want someone eavesdropping you and what is more important you need to know that you speaking with the right node. Imagine a situation when someone is telling you that your mother is dying just to fish you into some dangerous situation, while this is all lie.
+
+Reliability, you got something important to say, but the server is down. You are left with you car and 2000 km to pass through.
+
+Performance, you do not want additional overhead, because you want to handle as much nodes as you can.
+
+Ease of implementation and well defined API\@.
+
+There are few possibilities of employing such requirements.
+\begin{itemize}
+\item Distributed messaging
+\item WebSockets
+\item Sockets
+\item REST
+\end{itemize}
+
+Let us first focus on distributed messaging. The message passing is done by different kind of sockets (e.g. Unix, TCP) and there are many software on the market that deals with all the complexity well. It really works great when you deal with communication between components that are usually called micro-services on the same or remote node. Yet there is no possibility of implementing it in user browser as our goal is to have the same communication method for clients as well as servers.
+
+WebSockets are kind of a new technique of full-duplex communication over TCP\@. They were standardized in 2011\cite{WebSockets-wiki}, but they are mature enough for production usage proved by many big companies. Performance for long standing connection is really good and it can be easily secured. The main application is real time data acquisition like stocks price variations which is not our goal, yet this technology also full fills our requirements.
+
+Sockets similarly to distributed messaging are not supported by web browsers. It's a little bit harder to secure this kind of linkage too, yet they prove their usefulness in server to server communication where they are broadly used.
+
+Finally we move to REST which is a software architecture style that can be easily employed in client-server and server-server communication. The communication is usually performed over HTTP and that will be in our case.
+
+The purpose of this work is to show how easily we can establish secure connection between multiple nodes, how we can create powerful authentication and authorization system and how to scale multiple connections with simple load balancer. Also I created simple framework written in Go for kick starting development. I tried to keep code clean with a lot of meaningful comments and high percentage of tests coverage.
+
+The whole system contains one central server (main) with load balancer for clients and servers that the main server will connect to in order to obtain some information.
+
+\section{Implementation environment}
+For the purpose of this thesis I used Go compiler for compiling the framework to binary file as it is written in that language and popular editor Vim for editing source code files. Tests were written also in Go using testing package from standard Go library. Gorilla was used as a more advanced http router than the one in Go standard library. As a version control system for tracking source code changes I used well-know Git.
