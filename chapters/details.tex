@@ -74,13 +74,13 @@ type Route struct {
 \begin{figure}[!htbp]
 \begin{verbatim}
 Route{
-    "POST",
-    "/register",
-    Middlewares{
-        middleware.AuthWithJwt,
-        middleware.BodyParser(user.User{}),
-    },
-    user.RegisterHandler,
+        "POST",
+        "/register",
+        Middlewares{
+                middleware.AuthWithJwt,
+                middleware.BodyParser(user.User{}),
+        },
+        user.RegisterHandler,
 }
 \end{verbatim}
 \renewcommand\figurename{Code}
@@ -93,7 +93,7 @@ When new request arrives the requested resource is searched linearly in array co
 \subsection{Building custom middleware}
 Function that can be treated as a middleware must accept \verb|http.Handler| usually named \verb|next| as a parameter and return \verb|http.Handler| as well. To create a \verb|http.Handler| use \verb|http.HandlerFunc| which is an adapter\cite{HTTP-go} defined as:
 \begin{verbatim}
-    type HandlerFunc func(ResponseWriter, *Request)
+type HandlerFunc func(ResponseWriter, *Request)
 \end{verbatim}
 
 Now you can see that you also need to create an ordinary function with\\ \verb|ResponseWriter| and \verb|*Request| parameters where you can modify those and after you finished you should call \verb|ServeHTTP| method on \verb|http.Handler| in order to pass execution context to the next middleware or a handler. If you will not do this the response and request will never reach the handler and the client will never see a response. This function is usually defined inside function middleware as anonymous function, but it does not have to.
@@ -103,10 +103,9 @@ Now you can see that you also need to create an ordinary function with\\ \verb|R
 func SetJSONHeader(next http.Handler) http.Handler {
         handler := func(w http.ResponseWriter, r *http.Request) {
                 w.Header().Set("Content-Type",
-                    "application/json;charset=utf-8")
-                next.ServeHTTP(w, r)
+                        "application/json;charset=utf-8")
+                        next.ServeHTTP(w, r)
         }
-
         return http.HandlerFunc(handler)
 }
 \end{verbatim}
@@ -142,8 +141,8 @@ Header, typically contains type of token and hashing algorithm. Then it is encod
 \begin{figure}[!htbp]
 \begin{verbatim}
 {
-  "alg": "HS256",
-  "typ": "JWT"
+    "alg": "HS256",
+    "typ": "JWT"
 }
 \end{verbatim}
 \caption{Typical header of JWT token}
@@ -163,9 +162,9 @@ To create signature, take the encoded header, encoded payload. Concatenate them 
 \begin{figure}[!htbp]
 \begin{verbatim}
 HMACSHA256(
-  base64UrlEncode(header) + "." +
-  base64UrlEncode(payload),
-  secret)
+    base64UrlEncode(header) + "." +
+    base64UrlEncode(payload),
+    secret)
 \end{verbatim}
 \renewcommand\figurename{Code}
 \caption{Pseudocode that generates signature from header and payload}
