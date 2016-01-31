@@ -1,0 +1,40 @@
+Every piece of software should be written in a way that is testable. Moreover it is really important for framework to have tests. There are many ways to test software. Two main categories emerged when dealing with this problem. Manual, which comes down to compile, run and observe behaviour and if it matches your expectations then proceed with testing of another functionality. Automatic, there are many approaches here. The one that was performed for the purpose of this work is called ``unit testing''.
+
+\section{Unit testing}
+Which is also called testing in separation. What does it really mean is the fact that we only check the correctness of logic of only one particular function. Those should have at least $2^n$ unit tests where $n$ is number of branches in function body (e.g.\ ifs blocks). Every dependencies and calls to others functions have to be ``mocked''. Mocking is a technique of injecting exactly the same signature of mocked function, yet with predefined behaviour like fixed return value.
+
+Unit testing is also specific to language of written application. In Go there is a special package \verb|testing| which provides methods to mark tests as failed.
+
+Every file which contains unit tests must be suffixed with \verb|_test| in file name\cite{Testing-go} in order for command \verb|go test| to be able to discover where unit tests are. In addition every function must be prefixed with \verb|Test| keyword and have one argument \verb|*testing T|, because aforementioned tool for executing test will call every test function with that argument.
+
+In body of unit test function we check the behaviour of function by calling it and comparing with expected result. Therefore it is a common pattern to called those variables ``actual'' and ``expected'. If those two are not the same then we will call method \verb|Error| or similar on \verb|*testing T| to mark the test as failed.
+
+Go standard library defines also very handy package \verb|httptest|\cite{httptest-go} that have exactly the same signatures and interfaces as a package \verb|http|, yet no actual data is being send over http protocol, but the actual calls could be further inspected which is crucial in order to maintain logic separation.
+
+Recall simple middleware (\ref{src:example-middleware}) for setting \verb|Content-Type| to JSON\@. The expected value of  \verb|Content-Type| is stored in \verb|expected| variable. Then we manually set up wrong header, then recorder is being created. \verb|HTTPHandlerMock| has the same interface as \verb|HTTPHandler| so it can be used as mock. Tested function is then called with mocked arguments, \verb|ServeHTTP| will spin up the faked server. Variable \verb|header| represents the actual data that is further compared to expected value. If condition is not met then message from method \verb|Errorf| will be printed to the console and command \verb|go test| will exit with non-zero status code.
+
+\begin{figure}[!htbp]
+\begin{verbatim}
+func TestSetJSONHeader(t *testing.T) {
+        expected := "application/json; charset=utf-8"
+
+        r, _ := http.NewRequest("GET", "", nil)
+        r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+        w := httptest.NewRecorder()
+
+        mock := &HTTPHandlerMock{w, r}
+        handler := SetJSONHeader(mock)
+
+        handler.ServeHTTP(mock.w, r)
+
+        header := mock.w.Header().Get("Content-Type")
+        if header != expected {
+                t.Errorf("Expected %s, got `%s`", expected, header)
+        }
+}
+\end{verbatim}
+\renewcommand\figurename{Code}
+\caption{Unit test of example middleware that sets response headers}
+\label{src:test-example-middleware}
+\end{figure}
