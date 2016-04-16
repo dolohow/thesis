@@ -36,5 +36,30 @@ The purpose of this work is to show how easily we can establish secure connectio
 
 The whole system contains one central server (main) with load balancer for clients and servers that the main server will connect to in order to obtain some information.
 
+
+\section{Software development process}
+All code was created in Test-driven development which is a software development process\cite{TDD} that has origin in extreme programming. The outcome of using this techniques is to make developer more efficient and more confident and to make the resulting code better tested, with fewer bugs.
+
+The development cycle could be divided into a few simple steps.
+\begin{enumerate}
+    \item Create a unit test.
+    \item Run test to see if it fail.
+
+        If the test will not fail that means there is a problem with test runner or the test does not verify anything.
+    \item Write a minimum code that satisfies the test.
+
+        Even hardcoded solution can work here. In next iteration the test could be more complicated or verify more than one case.
+    \item Run tests again.
+
+        If the test failed the code created in the previous step should be fixed. It could happen that the test is broken, hence needs to be fixed as well.
+    \item Refactor the code.
+
+        Refactoring is important. Some common parts could be moved to common places to avoid repetition. Dead code should be removed and so on.
+    \item Repeat all the above steps.
+
+        Until the whole assumed functionality is complete.
+\end{enumerate}
+
+
 \section{Implementation environment}
 For the purpose of this thesis I used Go compiler for compiling the framework to binary file as it is written in that language and popular editor Vim for editing source code files. Tests were written also in Go using testing package from standard Go library. Gorilla was used as a more advanced http router than the one in Go standard library. As a version control system for tracking source code changes I used well-know and battle-tested Git.
