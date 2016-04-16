@@ -129,6 +129,14 @@ Let us say the client wants to register on our website and the backend is RESTfu
 
 The client saves the token and attaches it to every request so we can be sure that he is the person who claims to be.
 
+\clearpage
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=0.6]{auth}
+\label{fig:auth}
+\caption{Activity diagram of token creation}
+\end{figure}
+
 \subsubsection{Token demystified}
 How the token looks like? It is a string contains three parts separated by ``.'' character\cite{JWT-introduction}. Those parts represents
 \begin{itemize}
