@@ -5,15 +5,16 @@ First of all let me explain what a node really is. Think about it as a some sort
 
 There are many ways to solve this problem, but there are some aspects that one should really care about.
 
-Security, you do not want someone eavesdropping you and what is more important you need to know that you speaking with the right node. Imagine a situation when someone is telling you that your mother is dying just to fish you into some dangerous situation, while this is all lie.
 
-Reliability, you got something important to say, but the server is down. You are left with you car and 2000 km to pass through.
+\begin{itemize}
+\item Security, you do not want someone eavesdropping you and what is more important you need to know that you speaking with the right node. Imagine a situation when someone is telling you that your mother is dying just to fish you into some dangerous situation, while this is all lie.
 
-Performance, you do not want additional overhead, because you want to handle as much nodes as you can.
+\item Reliability, you got something important to say, but the server is down. You are left with you car and 2000 km to pass through.
 
-Ease of implementation and well defined API\@.
+\item Performance, you do not want additional overhead, because you want to handle as much nodes as you can.
+\end{itemize}
 
-There are few possibilities of employing such requirements.
+Ease of implementation and well defined API\@. There are few possibilities of employing such requirements.
 \begin{itemize}
 \item Distributed messaging
 \item WebSockets
@@ -34,4 +35,4 @@ The purpose of this work is to show how easily we can establish secure connectio
 The whole system contains one central server (main) with load balancer for clients and servers that the main server will connect to in order to obtain some information.
 
 \section{Implementation environment}
-For the purpose of this thesis I used Go compiler for compiling the framework to binary file as it is written in that language and popular editor Vim for editing source code files. Tests were written also in Go using testing package from standard Go library. Gorilla was used as a more advanced http router than the one in Go standard library. As a version control system for tracking source code changes I used well-know Git.
+For the purpose of this thesis I used Go compiler for compiling the framework to binary file as it is written in that language and popular editor Vim for editing source code files. Tests were written also in Go using testing package from standard Go library. Gorilla was used as a more advanced http router than the one in Go standard library. As a version control system for tracking source code changes I used well-know and battle-tested Git.

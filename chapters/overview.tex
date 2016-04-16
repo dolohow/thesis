@@ -62,7 +62,7 @@ Framework uses middlewares for modifying every new request and then response tha
 \end{figure}
 
 \section{Authentication system and security}
-Authentication system is implemented as middleware and uses standarized JWT tokens\cite{JWT-rfc}. The big benefit is that we do not need to store session in our database, we only need to verify that the token was signed by us.
+Authentication system is implemented as middleware and uses standardized JWT tokens\cite{JWT-rfc}. The big benefit is that we do not need to store session in our database, we only need to verify that the token was signed by us.
 
 The security is implemented at different levels. Connection is secured by standard TLS/SSL on HTTP level. Some resources require user to be authenticated (valid token).
 

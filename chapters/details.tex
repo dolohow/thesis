@@ -56,7 +56,7 @@ In addition you can specify the port that the program will be listening on by \v
 
 \subsection{Path of the request}
 \label{sec:path-of-the-request}
-Server by default listens on port 5000. For every request the new Goroutine\cite{Goroutines-go} is being created. It is similar to thread, but basically it comes down to being a thread under the thread. Therefore every new request is handled separately and does not block the new requests. Such behaviour is provided by \textit{http}\cite{HTTP-go} package by default.
+Server by default listens on port 5000. For every request the new Goroutine\cite{Goroutines-go} is being created. It is similar to thread\cite{Programming-in-go}, but basically it comes down to being a thread under the thread. Therefore every new request is handled separately and does not block the new requests. Such behaviour is provided by \textit{http}\cite{HTTP-go} package by default.
 
 How can the application differentiate between one request or another? We need to have some sort of routing mechanism. As stated in~\ref{sec:resources} every resource is identified by URI, therefore for every URI new handler needs to be created.
 
@@ -91,7 +91,7 @@ Route{
 When new request arrives the requested resource is searched linearly in array consisting all \textit{Route} definitions. When it is not found then 404 Not Found status error code is sent. Then it is client job to handle that properly. When it is found, then the request object is piped to first default middleware. Those are mandatory, like setting proper response headers, next through middlewares specified in Route object. After last middleware being finished the handler is going to be executed. In handler one can set status code, body of a response like JSON object, fetch data from database and so on.
 
 \subsection{Building custom middleware}
-Function that can be treated as a middleware must accept \verb|http.Handler| usually named \verb|next| as a parameter and return \verb|http.Handler| as well. To create a \verb|http.Handler| use \verb|http.HandlerFunc| which is an adapter\cite{HTTP-go} defined as:
+Function that can be treated as a middleware must accept \verb|http.Handler|\cite{Go-Phrasebook} usually named \verb|next| as a parameter and return \verb|http.Handler| as well. To create a \verb|http.Handler| use \verb|http.HandlerFunc| which is an adapter\cite{HTTP-go} defined as:
 \begin{verbatim}
 type HandlerFunc func(ResponseWriter, *Request)
 \end{verbatim}
@@ -115,7 +115,7 @@ func SetJSONHeader(next http.Handler) http.Handler {
 \end{figure}
 
 \subsection{Creating handler}
-Handler is the last function that will be executed in execution chain\ref{fig:middleware} after all middlewares completed. The word ``Handler'' is suffixed to a function name in order differentiate between other functions.
+Handler is the last function that will be executed in execution chain (\ref{fig:middleware}) after all middlewares completed. The word ``Handler'' is suffixed to a function name in order differentiate between other functions.
 
 It accepts two parameters, first \verb|http.ResponseWriter| and \verb|*http.Request|. Request object contains \verb|Method|, \verb|URL| of resource, \verb|Body|. Those are the most important and often used. When you are finished with creating response, write it to a \verb|ResponseWriter| using \verb|fmt.Fprintf| or anything else that can write to \verb|io.Writer| interface.
 
