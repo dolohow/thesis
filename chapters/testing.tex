@@ -138,3 +138,8 @@ curl -d '{"user_name": "test", "password": "testpw"}' \
 \end{verbatim}
 
 This time returned message was 401 Unauthorized. It clearly states that the authentication failed, because the user no longer exists in a database.
+
+\section{Summary}
+To sum the things up, first the whole framework was covered by unit tests to help during development cycle. With every change in the codebase those tests were launched to verify if the written code performed as excepted. At the end of development, testing environment was created to test the functionality of framework in a real case scenario with a sample application that was meant to authenticate user and manage its account in a database.
+
+By creating extensive range of tests both unit and semi-automatic proved that our solution works and it is in par with assumptions made at the beginning of this thesis. Unit tests at any point of development can be run in order to verify if a new functionality does not break the other one. While the latter should be utilized at the end of development release cycle.
