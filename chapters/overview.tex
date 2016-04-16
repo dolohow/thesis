@@ -1,18 +1,5 @@
 REST is the software architecture style\cite{REST-wiki}. The communication is usually carried through HTTP protocol, but this is not a requirement. REST systems expose interfaces via URIs like\label{example-URI} \verb|/user| and then to interact with this resource one can use standard HTTP verbs (GET, POST, PUT and so on), but it does not need to implement all of them. Every new attempt to interact with resources is stateless, but there is a possibility of carrying additional information (i.e.\ for authorization) through HTTP headers.
 
-\section{Explanation of architecture}
-Architecture contains main server which serves data to clients (in this case users equipped with web browsers). Then it communicate with backend servers through RESTful API to get data for clients.
-
-In addition main server is an entity which can represent multiple servers hidden behind load balancer for scaling for high load plus one additional server for storing database and shared files via NFS\@.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[scale=0.5]{architecture}
-\label{fig:architecture}
-\caption{Architecture of the whole system}
-\end{figure}
-
-
 \section{Principles}
 REST is a set of principles that one can, but does not have fulfill. If criteria are met it can be said that implemented architecture is RESTful. Following sections present necessary principles that needs to be achieved.
 
